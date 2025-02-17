@@ -10,5 +10,6 @@ namespace StudyBuddy.Application.Abstractions.Infrastructure
       Task UpdateCourseAsync(CourseEntity course);
       Task<CourseEntity?> GetCourseEntityByIdAsync(Guid courseId, Guid termId);
       Task<IEnumerable<GetCourseResponseDto>> GetAllCoursesAsync(Guid termId);
+      Task DeleteCourseAsync(Guid courseId, Guid termId);
    }
 }

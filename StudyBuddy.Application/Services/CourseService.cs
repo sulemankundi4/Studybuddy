@@ -73,10 +73,23 @@ namespace StudyBuddy.Application.Services
          var courses = await _courseRepository.GetAllCoursesAsync(termId);
          if (courses == null || !courses.Any())
          {
-            return GenericResponse<IEnumerable<GetCourseResponseDto>>.Failure(ApiResponseMessages.NO_RECORDS_FOUND, 404);
+            return GenericResponse<IEnumerable<GetCourseResponseDto>>.Failure(ApiResponseMessages.NO_RECORD_FOUND, 404);
          }
 
          return GenericResponse<IEnumerable<GetCourseResponseDto>>.Success(courses, ApiResponseMessages.RECORD_FOUND, 200);
+      }
+
+      public async Task<GenericResponse> DeleteCourseAsync(Guid courseId, Guid termId)
+      {
+         var course = await _courseRepository.GetCourseEntityByIdAsync(courseId, termId);
+
+         if (course != null)
+         {
+            await _courseRepository.DeleteCourseAsync(courseId, termId);
+            return GenericResponse.Success(ApiResponseMessages.COURSE_DELETED_SUCCESSFULLY, 200);
+         }
+
+         return GenericResponse.Failure(ApiResponseMessages.NO_RECORD_FOUND, 404);
       }
    }
 }

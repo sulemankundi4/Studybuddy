@@ -28,13 +28,35 @@ namespace StudyBuddy.Infrastructure.Repositories
          await _context.SaveChangesAsync();
       }
 
-      public async Task DeleteActivityAsync(Guid activityId, Guid termId) =>
-         await _context.Activities.Where(x => x.Id == activityId && x.TermId == termId).ExecuteDeleteAsync();
-
-      public async Task<ActivityEntity?> GetActivityByIdAsync(Guid activityId, Guid termId)
+      public async Task DeleteActivityAsync(Guid activityId, Guid termId)
       {
-         return await _context.Activities.AsNoTracking().FirstOrDefaultAsync(x => x.Id == activityId && x.TermId == termId);
+         using (var transaction = await _context.Database.BeginTransactionAsync())
+         {
+            try
+            {
+               var activity = await _context.Activities.Include(a => a.Sessions).FirstOrDefaultAsync(a => a.Id == activityId && a.TermId == termId);
+               if (activity != null)
+               {
+                  foreach (var session in activity.Sessions)
+                  {
+                     session.ActivityId = null;
+                  }
+
+                  _context.Activities.Remove(activity);
+                  await _context.SaveChangesAsync();
+                  await transaction.CommitAsync();
+               }
+            }
+            catch
+            {
+               await transaction.RollbackAsync();
+               throw;
+            }
+         }
       }
+
+      public async Task<ActivityEntity?> GetActivityByIdAsync(Guid activityId, Guid termId) =>
+         await _context.Activities.AsNoTracking().FirstOrDefaultAsync(x => x.Id == activityId && x.TermId == termId);
 
       public async Task<IEnumerable<GetActivityResponseDto>> GetAllActivitiesAsync(Guid termId)
       {

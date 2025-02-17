@@ -24,13 +24,13 @@ namespace StudyBuddy.Core.Constants
       public const string COURSE_NAME_ALREADY_EXISTS_CHOOSE_ANY_OTHER = "Course name already exists choose any other!";
       public const string COURSE_NOT_FOUND = "Course not found!";
       public const string COURSE_UPDATED = "Course updated successfully!";
-      public const string NO_RECORDS_FOUND = "No records found!";
+      public const string NO_RECORD_FOUND = "No record found!";
       public const string TERM_DELETED_SUCCESSFULLY = "Term deleted successfully!";
       public const string SESSION_CREATED_SUCCESSFULLY = "Session created successfully!";
       public const string ACTIVITY_CREATED = "Activity created successfully!";
       public const string ACTIVITY_ALREADY_EXISTS = "Activity already exists with this name!";
       public const string ACTIVITY_UPDATED = "Activity updated successfully!";
-
+      public const string COURSE_DELETED_SUCCESSFULLY = "Course deleted succesfully!";
       public const string SESSION_UPDATED_SUCCESSFULLY = "Session updated successfully!";
       public const string SESSION_DELETED_SUCCESSFULLY = "Session deleted successfully!";
       public const string ACTIVITY_DELETED_SUCCESSFULLY = "Activity deleted successfully!";

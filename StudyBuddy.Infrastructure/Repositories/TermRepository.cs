@@ -24,11 +24,34 @@ namespace StudyBuddy.Infrastructure.Repositories
 
       public async Task DeleteTermAsync(Guid termId)
       {
-         var term = await _context.Terms.FirstOrDefaultAsync(x => x.Id == termId);
-         if (term != null)
+         using (var transaction = await _context.Database.BeginTransactionAsync())
          {
-            _context.Terms.Remove(term);
-            await _context.SaveChangesAsync();
+            try
+            {
+               var term = await _context.Terms
+                   .Include(t => t.Courses)
+                   .Include(t => t.Goal)
+                   .Include(t => t.Activities)
+                   .Include(t => t.Sessions)
+                   .FirstOrDefaultAsync(t => t.Id == termId);
+
+               if (term != null)
+               {
+                  _context.Sessions.RemoveRange(term.Sessions);
+                  _context.Courses.RemoveRange(term.Courses);
+                  _context.Activities.RemoveRange(term.Activities);
+                  _context.Goals.Remove(term.Goal);
+
+                  _context.Terms.Remove(term);
+                  await _context.SaveChangesAsync();
+                  await transaction.CommitAsync();
+               }
+            }
+            catch (Exception)
+            {
+               await transaction.RollbackAsync();
+               throw;
+            }
          }
       }
 
@@ -37,7 +60,6 @@ namespace StudyBuddy.Infrastructure.Repositories
          var terms = await _context.Terms.AsNoTracking().ToListAsync();
          return terms.Select(term => term.Map()).ToList();
       }
-
 
       public async Task<TermEntity?> GetTermEntityByIdAsync(Guid termId) =>
        await _context.Terms.AsNoTracking().FirstOrDefaultAsync(x => x.Id == termId);

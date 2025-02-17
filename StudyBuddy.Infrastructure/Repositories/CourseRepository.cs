@@ -47,5 +47,22 @@ namespace StudyBuddy.Infrastructure.Repositories
          return courses.Select(course => course.Map()).ToList();
       }
 
+      public async Task DeleteCourseAsync(Guid courseId, Guid termId)
+      {
+         using (var transaction = await _context.Database.BeginTransactionAsync())
+         {
+            try
+            {
+               await _context.Sessions.Where(s => s.CourseId == courseId).ExecuteDeleteAsync();
+               await _context.Courses.Where(c => c.Id == courseId && c.TermId == termId).ExecuteDeleteAsync();
+               await transaction.CommitAsync();
+            }
+            catch
+            {
+               await transaction.RollbackAsync();
+               throw;
+            }
+         }
+      }
    }
 }

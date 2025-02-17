@@ -31,5 +31,9 @@ namespace StudyBuddy.API.Controllers
       [HttpGet("/courses/all")]
       public async Task<GenericResponse<IEnumerable<GetCourseResponseDto>>> GetAllCourses(Guid termId) =>
          await _courseService.GetAllCoursesAsync(termId);
+
+      [HttpDelete("delete/{courseId}")]
+      public async Task<GenericResponse> DeleteCourse(Guid courseId, Guid termId) =>
+         await _courseService.DeleteCourseAsync(courseId, termId);
    }
 }

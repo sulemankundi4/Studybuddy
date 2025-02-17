@@ -38,7 +38,7 @@ namespace StudyBuddy.Application.Services
          var activities = await _activityRepository.GetAllActivitiesAsync(termId);
          if (activities == null || !activities.Any())
          {
-            return GenericResponse<IEnumerable<GetActivityResponseDto>>.Failure(ApiResponseMessages.NO_RECORDS_FOUND, 404);
+            return GenericResponse<IEnumerable<GetActivityResponseDto>>.Failure(ApiResponseMessages.NO_RECORD_FOUND, 404);
          }
 
          return GenericResponse<IEnumerable<GetActivityResponseDto>>.Success(activities, ApiResponseMessages.RECORD_FOUND, 200);
@@ -49,7 +49,7 @@ namespace StudyBuddy.Application.Services
          var activity = await _activityRepository.GetActivityByIdAsync(activityId, termId);
          if (activity == null)
          {
-            return GenericResponse<GetActivityResponseDto>.Failure(ApiResponseMessages.NO_RECORDS_FOUND, 404);
+            return GenericResponse<GetActivityResponseDto>.Failure(ApiResponseMessages.NO_RECORD_FOUND, 404);
          }
 
          var repsonseDto = activity.Map();
@@ -69,7 +69,7 @@ namespace StudyBuddy.Application.Services
          var activity = await _activityRepository.GetActivityByIdAsync(requestDto.ActivityId, requestDto.TermId);
          if (activity == null)
          {
-            return GenericResponse.Failure(ApiResponseMessages.NO_RECORDS_FOUND, 404);
+            return GenericResponse.Failure(ApiResponseMessages.NO_RECORD_FOUND, 404);
          }
          requestDto.Map(activity);
          await _activityRepository.UpdateActivityAsync(activity);
@@ -79,8 +79,15 @@ namespace StudyBuddy.Application.Services
 
       public async Task<GenericResponse> DeleteActivityAsync(Guid activityId, Guid termId)
       {
-         await _activityRepository.DeleteActivityAsync(activityId, termId);
-         return GenericResponse.Success(ApiResponseMessages.ACTIVITY_DELETED_SUCCESSFULLY, 200);
+         var activity = await _activityRepository.GetActivityByIdAsync(activityId, termId);
+
+         if (activity != null)
+         {
+            await _activityRepository.DeleteActivityAsync(activityId, termId);
+            return GenericResponse.Success(ApiResponseMessages.ACTIVITY_DELETED_SUCCESSFULLY, 200);
+         }
+
+         return GenericResponse.Failure(ApiResponseMessages.NO_RECORD_FOUND, 404);
       }
    }
 }

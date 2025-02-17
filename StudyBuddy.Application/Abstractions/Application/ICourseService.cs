@@ -9,5 +9,6 @@ namespace StudyBuddy.Application.Abstractions.Application
       Task<GenericResponse> CreateCourseAsync(CreateCourseRequestDto createCourseRequestDto);
       Task<GenericResponse> UpdateCourseAsync(UpdateCourseRequestDto updateCourseRequestDto);
       Task<GenericResponse<IEnumerable<GetCourseResponseDto>>> GetAllCoursesAsync(Guid termId);
+      Task<GenericResponse> DeleteCourseAsync(Guid courseId, Guid termId);
    }
 }

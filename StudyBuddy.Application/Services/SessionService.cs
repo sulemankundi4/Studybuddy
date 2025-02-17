@@ -56,7 +56,7 @@ namespace StudyBuddy.Application.Services
          var sessionEntity = await _sessionRepository.GetSessionEntityByIdAsync(sessionRequestDto.SessionId);
          if (sessionEntity == null)
          {
-            return GenericResponse.Failure(ApiResponseMessages.NO_RECORDS_FOUND, 404);
+            return GenericResponse.Failure(ApiResponseMessages.NO_RECORD_FOUND, 404);
          }
 
          sessionRequestDto.Map(sessionEntity);
@@ -70,7 +70,7 @@ namespace StudyBuddy.Application.Services
          var sessionEntity = await _sessionRepository.GetSessionEntityByIdAsync(sessionId);
          if (sessionEntity == null)
          {
-            return GenericResponse.Failure(ApiResponseMessages.NO_RECORDS_FOUND, 404);
+            return GenericResponse.Failure(ApiResponseMessages.NO_RECORD_FOUND, 404);
          }
 
          await _sessionRepository.DeleteSessionAsync(sessionEntity);

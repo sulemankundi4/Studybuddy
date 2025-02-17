@@ -79,8 +79,15 @@ namespace StudyBuddy.Application.Services
 
       public async Task<GenericResponse> DeleteTermAsync(Guid termId)
       {
-         await _termRepository.DeleteTermAsync(termId);
-         return GenericResponse.Success(ApiResponseMessages.TERM_DELETED_SUCCESSFULLY, 200);
+         var term = await _termRepository.GetTermEntityByIdAsync(termId);
+
+         if (term != null)
+         {
+            await _termRepository.DeleteTermAsync(termId);
+            return GenericResponse.Success(ApiResponseMessages.TERM_DELETED_SUCCESSFULLY, 200);
+         }
+
+         return GenericResponse.Success(ApiResponseMessages.NO_RECORD_FOUND, 404);
       }
    }
 }
