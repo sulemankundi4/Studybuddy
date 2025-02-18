@@ -4,7 +4,7 @@ namespace StudyBuddy.Core.Entities
    {
       public Guid Id { get; set; }
       public string Name { get; set; } = null!;
-      public int TotalStudyTime { get; set; } = 0;
+      public int ActivityProgressMinutes { get; set; } = 0;
       public Guid TermId { get; set; }
       public TermEntity Term { get; set; } = null!;
 

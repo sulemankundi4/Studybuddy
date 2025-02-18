@@ -14,7 +14,7 @@ namespace StudyBuddy.Application.Mapping
       public static void Map(this UpdateActivityRequestDto updateActivityRequestDto, ActivityEntity activityEntity)
       {
          activityEntity.Name = updateActivityRequestDto.Name;
-         activityEntity.TotalStudyTime = updateActivityRequestDto.TotalStudyTime;
+         activityEntity.ActivityProgressMinutes = updateActivityRequestDto.ActivityProgressMinutes;
          activityEntity.TermId = updateActivityRequestDto.TermId;
       }
 
@@ -30,7 +30,7 @@ namespace StudyBuddy.Application.Mapping
       public static void Map(this UpdateCourseRequestDto updateCourseRequestDto, CourseEntity courseEntity)
       {
          courseEntity.Name = updateCourseRequestDto.Name;
-         courseEntity.StudyGoal = updateCourseRequestDto.StudyGoal;
+         courseEntity.CourseGoalMinutes = updateCourseRequestDto.CourseGoalMinutes;
          courseEntity.StartDate = updateCourseRequestDto.StartDate;
          courseEntity.EndDate = updateCourseRequestDto.EndDate;
          courseEntity.CourseNameColor = updateCourseRequestDto.CourseNameColor;
@@ -86,7 +86,7 @@ namespace StudyBuddy.Application.Mapping
             TermNumber = createTermRequestDto.TermNumber,
             Goal = new GoalEntity
             {
-               StudyGoalTime = createTermRequestDto.Goals.StudyGoalTime,
+               TermGoalMinutes = createTermRequestDto.Goals.TermGoalMinutes,
                WeekDayStudyTime = createTermRequestDto.Goals.WeekDayStudyTime,
                WeekEndStudyTime = createTermRequestDto.Goals.WeekEndStudyTime
             }
@@ -101,7 +101,7 @@ namespace StudyBuddy.Application.Mapping
          return new CourseEntity
          {
             Name = createCourseRequestDto.Name,
-            StudyGoal = createCourseRequestDto.StudyGoal,
+            CourseGoalMinutes = createCourseRequestDto.CourseGoalMinutes,
             StartDate = createCourseRequestDto.StartDate,
             EndDate = createCourseRequestDto.EndDate,
             CourseNameColor = createCourseRequestDto.CourseNameColor,

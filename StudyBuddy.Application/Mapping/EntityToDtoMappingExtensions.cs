@@ -16,7 +16,7 @@ namespace StudyBuddy.Application.Mapping
             course.Name,
             course.StartDate,
             course.EndDate,
-            course.StudyGoal,
+            course.CourseGoalMinutes,
             course.CourseNameColor
          );
       }
@@ -40,7 +40,7 @@ namespace StudyBuddy.Application.Mapping
          (
             activity.Id,
             activity.Name,
-            activity.TotalStudyTime,
+            activity.ActivityProgressMinutes,
             activity.TermId
          );
       }

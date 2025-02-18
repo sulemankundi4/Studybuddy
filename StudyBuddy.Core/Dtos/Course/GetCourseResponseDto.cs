@@ -5,7 +5,7 @@ namespace StudyBuddy.Core.Dtos.Course
       string Name,
       DateOnly StartDate,
       DateOnly EndDate,
-      int StudyGoal,
+      int CourseGoalMinutes,
       string CourseNameColor
    );
 }
