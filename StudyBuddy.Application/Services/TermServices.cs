@@ -55,9 +55,9 @@ namespace StudyBuddy.Application.Services
          return GenericResponse.Success(ApiResponseMessages.TERM_UPDATED_SUCCESSFULLY, 200);
       }
 
-      public async Task<GenericResponse<IEnumerable<GetTermResponseDto>>> GetTermsAsync()
+      public async Task<GenericResponse<IEnumerable<GetTermResponseDto>>> GetTermsAsync(Guid userId)
       {
-         var terms = await _termRepository.GetAllTerms();
+         var terms = await _termRepository.GetAllTerms(userId);
          if (terms == null || !terms.Any())
          {
             return GenericResponse<IEnumerable<GetTermResponseDto>>.Failure(ApiResponseMessages.NO_TERMS_FOUND, 404);

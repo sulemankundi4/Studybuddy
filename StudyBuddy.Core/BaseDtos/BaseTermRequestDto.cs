@@ -3,6 +3,7 @@ namespace StudyBuddy.Core.BaseDtos
    public class BaseTermRequestDto
    {
       public string Name { get; set; } = null!;
+      public Guid UserId { get; set; }
       public string TermNumber { get; set; } = null!;
       public DateOnly StartDate { get; set; }
       public DateOnly EndDate { get; set; }

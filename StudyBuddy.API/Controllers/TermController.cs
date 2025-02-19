@@ -17,9 +17,9 @@ namespace StudyBuddy.API.Controllers
          _termService = termService;
       }
 
-      [HttpGet("all")]
-      public async Task<GenericResponse<IEnumerable<GetTermResponseDto>>> GetTerms() =>
-         await _termService.GetTermsAsync();
+      [HttpGet("all/{userId}")]
+      public async Task<GenericResponse<IEnumerable<GetTermResponseDto>>> GetTerms(Guid userId) =>
+         await _termService.GetTermsAsync(userId);
 
       [HttpPost("new")]
       public async Task<GenericResponse> CreateTerm([FromBody] CreateTermRequestDto createTermRequestDto) =>
@@ -29,7 +29,7 @@ namespace StudyBuddy.API.Controllers
       public async Task<GenericResponse> UpdateTerm([FromBody] UpdateTermRequestDto updateTermRequestDto) =>
          await _termService.UpdateTermAsync(updateTermRequestDto);
 
-      [HttpGet("/term/{termId}")]
+      [HttpGet("{termId}")]
       public async Task<GenericResponse<GetTermResponseDto>> GetTermById(Guid termId) =>
          await _termService.GetTermByIdAsync(termId);
 

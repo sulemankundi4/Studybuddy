@@ -55,9 +55,9 @@ namespace StudyBuddy.Infrastructure.Repositories
          }
       }
 
-      public async Task<IEnumerable<GetTermResponseDto>> GetAllTerms()
+      public async Task<IEnumerable<GetTermResponseDto>> GetAllTerms(Guid userId)
       {
-         var terms = await _context.Terms.AsNoTracking().ToListAsync();
+         var terms = await _context.Terms.AsNoTracking().Where(t => t.UserId == userId).ToListAsync();
          return terms.Select(term => term.Map()).ToList();
       }
 

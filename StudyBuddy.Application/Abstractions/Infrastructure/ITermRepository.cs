@@ -8,7 +8,7 @@ namespace StudyBuddy.Application.Abstractions.Infrastructure
    {
       Task CreateTermAsync(TermEntity termEntity);
       Task UpdateTermAsync(TermEntity termEntity);
-      Task<IEnumerable<GetTermResponseDto>> GetAllTerms();
+      Task<IEnumerable<GetTermResponseDto>> GetAllTerms(Guid userId);
       Task<TermEntity?> GetTermEntityByIdAsync(Guid termId);
       Task DeleteTermAsync(Guid termId);
    }

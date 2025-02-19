@@ -7,7 +7,6 @@ namespace StudyBuddy.Core.Entities
       public int ActivityProgressMinutes { get; set; } = 0;
       public Guid TermId { get; set; }
       public TermEntity Term { get; set; } = null!;
-
       public virtual ICollection<SessionEntity> Sessions { get; set; } = [];
    }
 }

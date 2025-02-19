@@ -28,15 +28,15 @@ namespace StudyBuddy.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("ActivityProgressMinutes")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("TermId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("TotalStudyTime")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -51,9 +51,15 @@ namespace StudyBuddy.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("CourseGoalMinutes")
+                        .HasColumnType("int");
+
                     b.Property<string>("CourseNameColor")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CourseProgressMinutes")
+                        .HasColumnType("int");
 
                     b.Property<DateOnly>("EndDate")
                         .HasColumnType("date");
@@ -64,9 +70,6 @@ namespace StudyBuddy.Infrastructure.Migrations
 
                     b.Property<DateOnly>("StartDate")
                         .HasColumnType("date");
-
-                    b.Property<int>("StudyGoal")
-                        .HasColumnType("int");
 
                     b.Property<Guid>("TermId")
                         .HasColumnType("uniqueidentifier");
@@ -84,11 +87,14 @@ namespace StudyBuddy.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("StudyGoalTime")
+                    b.Property<int>("TermGoalMinutes")
                         .HasColumnType("int");
 
                     b.Property<Guid>("TermId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("TermProgressMinutes")
+                        .HasColumnType("int");
 
                     b.Property<int>("WeekDayStudyTime")
                         .HasColumnType("int");
