@@ -26,6 +26,7 @@ namespace StudyBuddy.Application.Mapping
          return new GetTermResponseDto
          (
             term.Id,
+            term.UserId,
             term.Name,
             term.StartDate,
             term.EndDate,

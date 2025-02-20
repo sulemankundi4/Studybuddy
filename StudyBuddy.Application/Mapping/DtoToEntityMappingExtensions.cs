@@ -80,6 +80,7 @@ namespace StudyBuddy.Application.Mapping
          return new TermEntity
          {
             Name = createTermRequestDto.Name,
+            UserId = createTermRequestDto.UserId,
             StartDate = createTermRequestDto.StartDate,
             EndDate = createTermRequestDto.EndDate,
             TermDuration = createTermRequestDto.TermDuration,

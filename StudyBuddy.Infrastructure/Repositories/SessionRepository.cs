@@ -19,8 +19,33 @@ namespace StudyBuddy.Infrastructure.Repositories
 
       public async Task CreateSessionAsync(SessionEntity sessionEntity)
       {
-         await _context.Sessions.AddAsync(sessionEntity);
-         await _context.SaveChangesAsync();
+         using (var transaction = await _context.Database.BeginTransactionAsync())
+         {
+            try
+            {
+
+               var term = await _context.Terms.Include(t => t.Goal).FirstOrDefaultAsync(t => t.Id == sessionEntity.TermId);
+               term!.Goal.TermProgressMinutes += sessionEntity.SessionDuration;
+
+               var course = await _context.Courses.FirstOrDefaultAsync(c => c.Id == sessionEntity.CourseId);
+               course!.CourseProgressMinutes += sessionEntity.SessionDuration;
+
+               if (sessionEntity.ActivityId != null)
+               {
+                  var activity = await _context.Activities.Where(a => a.Id == sessionEntity.ActivityId).FirstOrDefaultAsync();
+                  activity!.ActivityProgressMinutes += sessionEntity.SessionDuration;
+               }
+
+               await _context.Sessions.AddAsync(sessionEntity);
+               await _context.SaveChangesAsync();
+               await transaction.CommitAsync();
+            }
+            catch
+            {
+               await transaction.RollbackAsync();
+               throw;
+            }
+         }
       }
 
       public async Task<IEnumerable<GetSessionResponseDto>> GetSessionsByPredicateAsync(Expression<Func<SessionEntity, bool>> predicate)
