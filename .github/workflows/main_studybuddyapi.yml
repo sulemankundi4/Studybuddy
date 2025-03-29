@@ -24,7 +24,7 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Restore, build, and publish
-        working-directory: ./Api
+        working-directory: .\Api
         run: |
           dotnet restore
           dotnet build --configuration Release
