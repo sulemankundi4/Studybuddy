@@ -5,14 +5,13 @@ using StudyBuddy.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add CORS policy
-builder.Services.AddCors(options =>
+builder.Services.AddCors(option =>
 {
-   options.AddPolicy("AllowFrontend", policy =>
+   option.AddPolicy("AllowFrontend", policy =>
    {
       policy.WithOrigins("http://localhost:5173")
-             .AllowAnyHeader()
-             .AllowAnyMethod();
+            .AllowAnyHeader()
+            .AllowAnyMethod();
    });
 });
 
