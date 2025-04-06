@@ -5,6 +5,17 @@ using StudyBuddy.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add CORS policy
+builder.Services.AddCors(options =>
+{
+   options.AddPolicy("AllowFrontend", policy =>
+   {
+      policy.WithOrigins("http://localhost:5173")
+             .AllowAnyHeader()
+             .AllowAnyMethod();
+   });
+});
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -21,6 +32,9 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+// Use CORS policy
+app.UseCors("AllowFrontend");
 
 app.UseExceptionHandler(_ => { });
 
